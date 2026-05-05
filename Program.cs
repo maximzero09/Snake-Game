@@ -2,9 +2,11 @@
 using System.Threading;
 enum ActionState
 {
-    Idle,
-    MoveForward,
-    MoveBack
+    Down,
+    Up,
+    Right,
+    Left,
+    Idle
 }
 
 
@@ -28,6 +30,27 @@ class Program
 
         while (true)
         {
+            if(Console.KeyAvailable)
+            {
+                var key = Console.ReadKey(true).Key;
+                switch (key)
+                {
+                    case ConsoleKey.W:
+                        state = ActionState.Up;
+                        break;
+                    case ConsoleKey.S:
+                        state = ActionState.Down;
+                        break;
+                    case ConsoleKey.A:
+                        state = ActionState.Left;
+                        break;
+                    case ConsoleKey.D:
+                        state = ActionState.Right;
+                        break;
+                    
+                }
+            }
+            System.Threading.Thread.Sleep(50);
             // Top border
             Console.WriteLine("+" + new string('-', cols * 4) + "+");
 
@@ -44,6 +67,8 @@ class Program
                 Console.WriteLine("|");
             }
             Console.WriteLine("+" + new string('-', cols * 4) + "+"); //bottom border
+            System.Threading.Thread.Sleep(100); 
+            Console.Clear();
         }
     }
 }
