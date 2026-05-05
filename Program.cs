@@ -12,6 +12,7 @@ enum ActionState
 
 class Program
 {
+    
     static void Main(string[] args)
     {
         ActionState state = ActionState.Idle;
@@ -49,55 +50,55 @@ class Program
                         break;
 
                 }
+
             }
             switch (state)
             {
+               
                 case ActionState.Up:
-                    if (randomRow > 0)
+                    if (matrix[randomRow, randomCol] < cols - 1 || randomRow - 1 > 
                     {
                         if (matrix[randomRow, randomCol] == 5)
                         {
                             score++;
+                            Console.WriteLine("You collected a point!");
                         }
-                            randomRow--;
+                        matrix[randomRow, randomCol] = 0; // Clear current position
+                        randomRow--;
                         matrix[randomRow, randomCol] = 1; // Move up
                     }
                     break;
                 case ActionState.Down:
-                    if (randomRow < rows - 1)
+                    if (matrix[randomRow, randomCol] == 5)
                     {
-                        if (matrix[randomRow, randomCol] == 5)
-                        {
-                            score++;
-                        }
-                        matrix[randomRow, randomCol] = 0; // Clear current position
-                        randomRow++;
-                        matrix[randomRow, randomCol] = 1; // Move down
+                        score++;
+                        Console.WriteLine("You collected a point!");
                     }
+                    matrix[randomRow, randomCol] = 0; // Clear current position
+                    randomRow++;
+                    matrix[randomRow, randomCol] = 1; // Move down
+
                     break;
                 case ActionState.Left:
-                    if (randomCol > 0)
+                    if (matrix[randomRow, randomCol] == 5)
                     {
-                        if (matrix[randomRow, randomCol] == 5)
-                        {
-                            score++;
-                        }
-                        matrix[randomRow, randomCol] = 0; // Clear current position
-                        randomCol--;
-                        matrix[randomRow, randomCol] = 1; // Move left
+                        score++;
+                        Console.WriteLine("You collected a point!");
                     }
+                    matrix[randomRow, randomCol] = 0; // Clear current position
+                    randomCol--;
+                    matrix[randomRow, randomCol] = 1; // Move left
                     break;
                 case ActionState.Right:
-                    if (randomCol < cols - 1)
+                    if (matrix[randomRow, randomCol] == 5)
                     {
-                        if (matrix[randomRow, randomCol] == 5)
-                        {
-                            score++;
-                        }
-                        matrix[randomRow, randomCol] = 0; // Clear current position
-                        randomCol++;
-                        matrix[randomRow, randomCol] = 1; // Move right
+                        score++;
+                        Console.WriteLine("You collected a point!");
                     }
+                    matrix[randomRow, randomCol] = 0; // Clear current position
+                    randomCol++;
+                    matrix[randomRow, randomCol] = 1; // Move right
+
                     break;
             }
 
@@ -107,21 +108,24 @@ class Program
             // Top border
             Console.WriteLine("+" + new string('-', cols * 4) + "+");
 
-                    for (int i = 0; i < rows; i++)
-                    {
-                        Console.Write("|");
-                        Console.WriteLine();
+            for (int i = 0; i < rows; i++)
+            {
+                Console.SetCursorPosition(0, i + 1); // Move cursor to the beginning of the line
+                Console.Write("|");
+                Console.WriteLine();
 
-                        for (int j = 0; j < cols; j++)
-                        {
-                            Console.Write($" {matrix[i, j],2} "); // spacing for alignment
-                        }
+                for (int j = 0; j < cols; j++)
+                {
+                    Console.Write($" {matrix[i, j],2} "); // spacing for alignment
+                }
 
-                        Console.WriteLine("|");
-                    }
-                    Console.WriteLine("+" + new string('-', cols * 4) + "+"); //bottom border
-                    System.Threading.Thread.Sleep(100);
-                    Console.Clear();
+                Console.WriteLine("|");
+            }
+            Console.WriteLine("+" + new string('-', cols * 4) + "+"); //bottom border
+            Console.WriteLine($"Score: {score}");
+            System.Threading.Thread.Sleep(100);
+            // Console.Clear();
+
             }
         }
     }
